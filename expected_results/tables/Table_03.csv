@@ -1,0 +1,6 @@
+outcome,trajectory_change,CI_low,CI_high,high_minus_low_trial_1,high_minus_low_trial_10,q
+DDK Rate,-0.214,-0.301,-0.126,0.003,-0.211,0.001
+DDK Regularity,2.985,-2.669,8.967,,,0.307
+DDK Duration,4.468,2.361,6.618,-1.69,2.71,0.001
+Pause Regularity,14.817,3.866,26.922,9.36,25.56,0.014
+Pause Duration,5.705,1.802,9.757,2.28,8.12,0.012

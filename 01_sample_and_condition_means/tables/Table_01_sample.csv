@@ -1,0 +1,7 @@
+﻿component,participants,observations,role_in_analysis
+Single-task DDK,155,465,3 trials per participant; condition means
+Concurrent DDK + working-memory task,155,3100,10 Low and 10 High trials per participant
+Age,155,155,Moderator of task-condition contrasts
+Working-memory responses,155,3100,Description of concurrent task performance
+CMMS,155,155,Exploratory moderator of task-condition contrasts
+Manual-annotation subset,20,460,Validation of automated feature extraction

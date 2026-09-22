@@ -1,0 +1,18 @@
+{
+  "scale": "CMMS",
+  "input_tables": {
+    "demographics": "data_raw/participants.csv",
+    "condition_means": "01_sample_and_condition_means/data_processed/speech_condition_means.csv",
+    "dual_task_trials": "data_raw/ddkwm_trials.csv"
+  },
+  "available_n": 155,
+  "condition_mean_rows": 465,
+  "trial_rows": 3100,
+  "missing_scores_not_imputed": true,
+  "age_and_education_adjusted": true,
+  "bootstrap_repetitions": 2000,
+  "all_primary_models_optimizer_success": true,
+  "all_rank_models_optimizer_success": true,
+  "random_effect_structure": "diagonal (uncorrelated) random intercept + planned within-participant slopes",
+  "fixed_order_warning": "High always followed Low; High-Low terms are ordered-block contrasts, not pure causal load effects."
+}

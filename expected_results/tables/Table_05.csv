@@ -1,0 +1,6 @@
+outcome,single_to_dual_x_CMMS,CI_low,CI_high,q,high_minus_low_x_CMMS,high_CI_low,high_CI_high,high_q
+DDK Rate,0.180,0.04,0.32,0.035,-0.034,-0.10,0.03,0.565
+DDK Regularity,-0.30,-5.89,5.62,0.919,-0.50,-3.44,2.54,0.745
+DDK Duration,-2.50,-5.53,0.62,0.144,0.65,-0.67,1.99,0.565
+Pause Regularity,-12.55,-21.97,-1.99,0.035,6.47,0.13,13.22,0.227
+Pause Duration,-7.47,-13.00,-1.58,0.035,0.95,-1.63,3.60,0.591

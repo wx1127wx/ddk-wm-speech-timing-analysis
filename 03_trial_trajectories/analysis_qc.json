@@ -1,0 +1,13 @@
+{
+  "participants": 155,
+  "trials": 3100,
+  "low_trials": 1550,
+  "high_trials": 1550,
+  "age_mean": 39.541935483870965,
+  "age_sd": 19.028085431556583,
+  "age_range": [
+    22.0,
+    86.0
+  ],
+  "input_table": "data_raw/ddkwm_trials.csv"
+}

@@ -1,0 +1,3 @@
+﻿scale,target,analysis,n,rho,p,CI_low,CI_high,q_BH_within_scale
+CMMS,age_years,Spearman,155,-0.5095766834574385,1.2738878563250044e-11,,,2.5477757126500088e-11
+CMMS,education_years,Spearman,155,0.4352760203856385,1.5131726469379312e-08,,,1.5131726469379312e-08

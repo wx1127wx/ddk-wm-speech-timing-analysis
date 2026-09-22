@@ -1,0 +1,6 @@
+outcome,single_to_dual_x_age,CI_low,CI_high,q,high_minus_low_x_age,high_minus_low_q
+DDK Rate,-0.345,-0.480,-0.210,0.001,0.006,0.882
+DDK Regularity,2.253,-3.456,8.300,0.447,1.840,0.601
+DDK Duration,4.133,0.948,7.418,0.013,-0.785,0.601
+Pause Regularity,34.121,20.640,49.108,0.001,-1.821,0.882
+Pause Duration,18.734,12.202,25.646,0.001,-0.197,0.882

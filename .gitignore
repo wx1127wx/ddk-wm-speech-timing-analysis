@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+data_raw/*.csv
+data_raw/*.tsv
+data_raw/*.xlsx
+.DS_Store

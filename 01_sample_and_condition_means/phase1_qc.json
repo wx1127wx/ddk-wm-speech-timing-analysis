@@ -1,0 +1,17 @@
+{
+  "n_participants": 155,
+  "n_condition_means": 465,
+  "conditions": [
+    "Single",
+    "Low",
+    "High"
+  ],
+  "metrics": [
+    "DDK Rate",
+    "DDK Regularity",
+    "DDK Duration",
+    "Pause Regularity",
+    "Pause Duration"
+  ],
+  "all_lmm_converged": true
+}
