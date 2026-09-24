@@ -1,5 +1,7 @@
 # Analysis code for the JSLHR submission
 
+[中文说明](README_zh-CN.md)
+
 **Manuscript title:** *Speech Timing Level and Trajectory Across Three Ordered Diadochokinetic Task Conditions: Mean-Level Differences, Repeated-Trial Change, and Age Associations*
 
 This is the minimal manuscript-specific release. It contains only analyses reported in the current submission: sample/condition means and age moderation, working-memory accuracy, Low/High trial trajectories, the two reported trajectory sensitivity analyses, CMMS moderation (including rank-score sensitivity), and manual–automatic agreement. Earlier exploratory analyses, unused figures, and superseded workflows are intentionally excluded.
