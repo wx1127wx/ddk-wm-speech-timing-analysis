@@ -2,13 +2,13 @@
 
 [English version](README.md)
 
-**稿件题目：** *Speech Timing Level and Trajectory Across Three Ordered Diadochokinetic Task Conditions: Mean-Level Differences, Repeated-Trial Change, and Age Associations*
+**稿件题目：** *Sequential Diadochokinesis Performance During Visual-Memory Dual Tasking: Repeated-Trial Dynamics Across Adulthood*
 
 本仓库是与当前投稿稿件对应的最小代码发布版本，仅包含稿件报告的分析：条件均值与年龄调节、工作记忆正确率、Low/High 试次轨迹、两项已报告的轨迹敏感性分析、CMMS 调节（包括秩分数敏感性分析）以及手工与自动特征的一致性分析。早期探索性分析、未使用的图形和已被替代的工作流不包含在本版本中。
 
 ## 数据可用性与隐私
 
-仓库不包含参与者级输入数据。这与稿件中的数据可用性声明一致：去标识化特征表可在合理请求并满足伦理和数据保护要求的前提下向通讯作者获取。运行流程前，请按照 `data_raw/README.md` 的说明，将四个受控访问文件放入 `data_raw/`。公开仓库中不得加入原始音频、直接身份标识、录音日期或行政性录音字段。
+代码、汇总结果和图已公开；仓库不包含参与者级输入数据。源数据文件及访问安排见 `data_raw/README.md`：去标识化特征表可在合理请求并满足伦理和数据保护要求的前提下向通讯作者获取。运行流程前，请按照该说明将四个受控访问文件放入 `data_raw/`。公开仓库中不得加入原始音频、直接身份标识、录音日期或行政性录音字段。
 
 ## 环境与运行
 
@@ -30,15 +30,23 @@ powershell -ExecutionPolicy Bypass -File .\run_all.ps1 -Python python
 - `04_reported_sensitivity`：结果部分报告的仅正确反应分析和 Trials 2–9 敏感性分析。
 - `05_cmms_moderation`：表 5、CMMS 描述统计与关联分析、试次级调节分析和秩分数敏感性分析。
 - `06_manual_validation`：表 6 统计量和条件变化一致性分析。
-- `expected_results`：用于不可变结果比较的四舍五入数值和投稿图形文件。
+- `expected_results`：锁定的数值比较目标及当前稿件参考图。
 
 `MANUSCRIPT_OUTPUT_MAP.csv` 给出了稿件结论、分析脚本和输出文件之间的对应关系。图 1 是任务流程示意图，不由统计分析流水线生成。
 
 ## 可追溯性说明
 
-1. 表 3 中 DDK Rate、DDK Regularity 和 DDK Duration 三行来自 Methods 中描述的 Low/High-only 试次级模型。投稿稿件中的两个 Pause 行来自经过年龄校正的 Single/Low/High 模型。`fit_reported_pause_trajectory_rows.py` 保留了实际使用的来源，以便复现投稿数值。这构成稿件方法描述与模型规格之间的不一致，投稿或公开存档前应进一步处理。
+1. 表 3 中 DDK Rate、DDK Regularity 和 DDK Duration 三行来自 Low/High-only 试次级模型；两个 Pause 行来自年龄校正的 Single/Low/High 模型。修订后的 Methods 已明确说明这两种规格及不同的 FDR 家族。`fit_reported_pause_trajectory_rows.py` 保留实际的暂停结果来源，原模型和表格数值保持不变。
 2. 本版本按照稿件所述实现了 2,000 次参与者聚类 bootstrap 重抽样。投稿表格保留了早期固定随机种子实现得到的区间；点估计一致，但部分 bootstrap 区间可能略有差异。验证脚本对这些区间使用明确的 Monte Carlo 容差，对其他结果使用严格的四舍五入容差。
-3. 图 2 与投稿文件逐字节一致。图 3 和图 4 根据最终模型输出重新生成；由于栅格化和投稿导出过程不同，投稿 PNG 文件保留在 `expected_results/figures` 中供视觉比较。
+3. 图 2 与稿件参考图逐字节一致。图 3 根据最终模型输出重新生成，其参考 PNG 保留在 `expected_results/figures` 中供视觉比较。图 4 及其参考 PNG 已于2026-10-08更新为第16版：拟合和预测网格使用同一年龄尺度，图内注明年龄单位及对比方向。在本次验证环境中，更新脚本生成的 PNG 与第16版 Word 内嵌图逐字节一致。
+
+## 年龄标准化与图4修正
+
+保留现有两种年龄计算口径。条件均值年龄调节模型在465条参与者×条件记录上使用样本标准差（`ddof=1`）：年龄均值39.5419年、SD 18.9870年，即模型一单位标准化年龄约对应18.99年。年龄校正的暂停轨迹及CMMS模型先在参与者表标准化、再合并重复记录：均值相同、SD 19.0281年，即约19.03年。两者独立参与者人数均为155人。
+
+图4原预测网格使用155人尺度，而拟合沿用465条条件记录的 `age_z`；现已将中心线和置信带的预测尺度对齐为拟合尺度。表4及稿件条件均值年龄效应标签对应约18.99年。模型系数、置信区间、p值和FDR q值不变。推导与核验范围见 [AGE_STANDARDIZATION.md](AGE_STANDARDIZATION.md)。
+
+第16版核对使用本地输入复现了五个原有条件均值年龄模型，系数、SE、p、区间及FDR结果与公开表一致。这是针对性验证，并非对所有研究分析的全流程重跑。四个对数结局模型虽然优化器收敛，但提示随机效应方差可能位于边界；保留该提示，供作者进一步检查。
 
 ## 可复现性规则
 

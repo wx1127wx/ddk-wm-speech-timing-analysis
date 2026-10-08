@@ -1,4 +1,8 @@
-"""Build manuscript Figure 4 from the participant-mean models in Table 4."""
+"""Build Figure 4 with the same age scaling for model fitting and prediction.
+
+The condition-mean models retain the 465-row sample-SD convention. The
+155-participant convention used in pause-trajectory and CMMS models is unchanged.
+"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -35,14 +39,20 @@ def main() -> None:
     FIGURES.mkdir(parents=True, exist_ok=True)
     means = pd.read_csv(MEANS, dtype={"analysis_id": str})
     table4 = pd.read_csv(TABLE4, encoding="utf-8-sig")
-    participant_age = means[["analysis_id", "age_years"]].drop_duplicates("analysis_id").age_years
-    age_mean, age_sd = participant_age.mean(), participant_age.std(ddof=1)
+    age_mean = means.age_years.mean()
+    age_sd = means.age_years.std(ddof=1)
+    if not np.allclose(means.age_z, (means.age_years - age_mean) / age_sd,
+                       rtol=1e-12, atol=1e-12):
+        raise ValueError("Prediction age scaling does not match the fitted age_z column.")
     age = np.linspace(means.age_years.min(), means.age_years.max(), 130)
     age_z = (age - age_mean) / age_sd
-    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 8.5, "pdf.fonttype": 42})
-    fig, axes = plt.subplots(1, 2, figsize=(7.05, 3.2), constrained_layout=True)
-    fig.suptitle("Age associations with pause timing across ordered task conditions", fontsize=12, fontweight="bold")
-    for panel, ax, (outcome, column) in zip("AB", axes, SPECS):
+    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10,
+                         "pdf.fonttype": 42, "ps.fonttype": 42, "axes.linewidth": 1.0})
+    fig, axes = plt.subplots(1, 2, figsize=(12.4, 5.492))
+    fig.subplots_adjust(left=.065, right=.985, bottom=.18, top=.82, wspace=.25)
+    fig.suptitle("Age associations with pause timing from participant-mean models",
+                 fontsize=15, fontweight="bold", y=.97)
+    for panel, ax, (outcome, column) in zip("ab", axes, SPECS):
         work = means.copy()
         work["outcome"] = np.log(work[column])
         model = mixedlm("outcome ~ duality + load + age_z + duality:age_z + load:age_z",
@@ -51,25 +61,34 @@ def main() -> None:
             fit = model.fit(reml=True, method="lbfgs", maxiter=2000, disp=False)
         except Exception:
             fit = model.fit(reml=True, method="powell", maxiter=2000, disp=False)
+        if not fit.converged:
+            raise RuntimeError(f"Figure 4 model did not converge: {outcome}")
         for condition in ["Single", "Low", "High"]:
             observed = work[work.condition == condition]
             prediction, low, high = fixed_prediction(fit, condition, age_z)
-            ax.scatter(observed.age_years, observed[column], s=8, alpha=.10, color=COLORS[condition], edgecolors="none")
-            ax.fill_between(age, low, high, color=COLORS[condition], alpha=.09, linewidth=0)
-            ax.plot(age, prediction, color=COLORS[condition], linewidth=2, label=condition)
+            ax.scatter(observed.age_years, observed[column], s=13, alpha=.18,
+                       color=COLORS[condition], edgecolors="none", rasterized=True)
+            ax.fill_between(age, low, high, color=COLORS[condition], alpha=.13, linewidth=0)
+            ax.plot(age, prediction, color=COLORS[condition], linewidth=2.1, label=condition)
         row = table4[table4.outcome == outcome].iloc[0]
-        dual_q = "<.001" if row.single_to_dual_q < .001 else f"={row.single_to_dual_q:.3f}".replace("0.", ".")
-        load_q = "<.001" if row.high_minus_low_q < .001 else f"={row.high_minus_low_q:.3f}".replace("0.", ".")
-        ax.text(.025, .965, f"Single-Dual x age: {row.single_to_dual_x_age:+.1f}%, q {dual_q}\n"
-                f"High-Low x age: {row.high_minus_low_x_age:+.1f}%, q {load_q}",
-                transform=ax.transAxes, va="top", fontsize=7.6,
-                bbox={"facecolor": "white", "edgecolor": "none", "alpha": .88})
-        ax.set_title(f"{panel}  {outcome}", loc="left", fontsize=9.3, fontweight="bold")
-        ax.set(xlabel="Age (years)", ylabel=f"{outcome} (ms)")
+        dual_q = "< .001" if row.single_to_dual_q < .001 else "= " + f"{row.single_to_dual_q:.3f}".lstrip("0")
+        load_q = "< .001" if row.high_minus_low_q < .001 else "= " + f"{row.high_minus_low_q:.3f}".lstrip("0")
+        ax.text(.025, .965, f"Dual–Single × age: {row.single_to_dual_x_age:+.1f}%, q {dual_q}\n"
+                f"High–Low × age: {row.high_minus_low_x_age:+.1f}%, q {load_q}\n"
+                f"Age effects per {age_sd:.2f} years",
+                transform=ax.transAxes, va="top", fontsize=8.6,
+                bbox={"facecolor": "white", "edgecolor": "none", "alpha": .94, "pad": 3})
+        ax.set_title(f"{panel}  {outcome}", loc="left", fontsize=12.5, fontweight="bold", pad=10)
+        ax.set_xlabel("Age (years)", fontsize=11)
+        ax.set_ylabel(f"{outcome} (ms)", fontsize=11)
         ax.spines[["top", "right"]].set_visible(False)
-    axes[0].legend(title="Task condition", frameon=False, fontsize=7.5, title_fontsize=7.5)
-    fig.savefig(FIGURES / "Figure_04.png", dpi=600, facecolor="white", bbox_inches="tight")
-    fig.savefig(FIGURES / "Figure_04.pdf", facecolor="white", bbox_inches="tight")
+        ax.grid(axis="y", color="#D9DEE3", linewidth=.8)
+        ax.set_axisbelow(True)
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", bbox_to_anchor=(.5, .025),
+               ncol=3, frameon=False, fontsize=10)
+    fig.savefig(FIGURES / "Figure_04.png", dpi=600, facecolor="white")
+    fig.savefig(FIGURES / "Figure_04.pdf", facecolor="white")
     plt.close(fig)
 
 

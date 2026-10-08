@@ -1,9 +1,9 @@
 """Reproduce the Pause rows actually reported in manuscript Table 3.
 
-Important: these two rows came from an age-adjusted three-condition model
-(Single/Low/High), whereas the manuscript Methods describes the Stage-2 model
-as Low/High only.  The release keeps this script so the published numbers are
-traceable; README.md flags the specification mismatch for author resolution.
+These two rows use an age-adjusted three-condition model (Single/Low/High).
+The current manuscript Methods explicitly distinguishes this specification
+from the Low/High-only model used for the three DDK rows. The model and numeric
+outputs are retained; see README.md and AGE_STANDARDIZATION.md for traceability.
 """
 from __future__ import annotations
 

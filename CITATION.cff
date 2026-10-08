@@ -1,9 +1,9 @@
 cff-version: 1.2.0
 message: "If you use this analysis code, please cite the associated manuscript."
-title: "Analysis code for Speech Timing Level and Trajectory Across Three Ordered Diadochokinetic Task Conditions"
+title: "Analysis code for Sequential Diadochokinesis Performance During Visual-Memory Dual Tasking: Repeated-Trial Dynamics Across Adulthood"
 type: software
-version: 1.0.0
-date-released: 2026-09-22
+version: 1.0.1
+date-released: 2026-10-08
 authors:
   - family-names: Wang
     given-names: Xiao
