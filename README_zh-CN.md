@@ -38,7 +38,7 @@ powershell -ExecutionPolicy Bypass -File .\run_all.ps1 -Python python
 
 1. 表 3 中 DDK Rate、DDK Regularity 和 DDK Duration 三行来自 Low/High-only 试次级模型；两个 Pause 行来自年龄校正的 Single/Low/High 模型。修订后的 Methods 已明确说明这两种规格及不同的 FDR 家族。`fit_reported_pause_trajectory_rows.py` 保留实际的暂停结果来源，原模型和表格数值保持不变。
 2. 本版本按照稿件所述实现了 2,000 次参与者聚类 bootstrap 重抽样。投稿表格保留了早期固定随机种子实现得到的区间；点估计一致，但部分 bootstrap 区间可能略有差异。验证脚本对这些区间使用明确的 Monte Carlo 容差，对其他结果使用严格的四舍五入容差。
-3. 图 2 与稿件参考图逐字节一致。图 3 根据最终模型输出重新生成，其参考 PNG 保留在 `expected_results/figures` 中供视觉比较。图 4 及其参考 PNG 已于2026-10-08更新为第16版：拟合和预测网格使用同一年龄尺度，图内注明年龄单位及对比方向。在本次验证环境中，更新脚本生成的 PNG 与第16版 Word 内嵌图逐字节一致。
+3. 图 2 已于2026-10-13调整显示排版：删除总标题、各子图说明和底部注释；放大的分组图例与FDR校正q值的显著性说明作为整体，居中放在右下方空白面板。图形元素的定义放在文章图注中。绘图数据、估计值、置信区间和检验保持不变，原参考PNG保留在 `expected_results/figures` 中。图 3 根据最终模型输出重新生成，其参考 PNG 保留在 `expected_results/figures` 中供视觉比较。图 4 及其参考 PNG 已于2026-10-08更新为第16版：拟合和预测网格使用同一年龄尺度，图内注明年龄单位及对比方向。在本次验证环境中，更新脚本生成的 PNG 与第16版 Word 内嵌图逐字节一致。
 
 ## 年龄标准化与图4修正
 

@@ -84,7 +84,34 @@ def draw_panel(ax, metric, column, unit, data, contrast, letter, rng):
     ax.set_axisbelow(True)
     ax.spines[["top", "right"]].set_visible(False)
     ax.text(-.11, 1.07, letter, transform=ax.transAxes, fontsize=11, fontweight="bold", va="top", color=INK)
-    ax.text(.02, 1.01, "dots: displayed participant means; box: IQR; line: mean ± 95% CI", transform=ax.transAxes, fontsize=6.7, va="bottom", color="#5F696E")
+
+def draw_legend_panel(ax):
+    """Keep the group legend and significance key in the unused panel."""
+    ax.axis("off")
+    handles = [patches.Patch(facecolor=COLORS[c], edgecolor="none", alpha=.72, label=c) for c in CONDITIONS]
+    handles.append(plt.Line2D([0], [0], color=INK, marker="o", linewidth=1.8, markersize=6, label="Mean ± 95% CI"))
+    legend = ax.legend(handles=handles, loc="upper left", bbox_to_anchor=(.02, 1.02),
+                       ncol=1, frameon=False, fontsize=12, handlelength=2.2,
+                       labelspacing=.8, borderaxespad=0)
+    # Explain only the FDR q thresholds; plot-layer definitions belong in the caption.
+    display_key = (
+        "FDR-adjusted q:\n"
+        "* q < .05; ** q < .01; *** q < .001\n"
+        "n.s.: not significant after FDR adjustment"
+    )
+    key = ax.text(.02, .53, display_key, transform=ax.transAxes,
+                  ha="left", va="top", fontsize=9, linespacing=1.25, color=INK)
+    # Center the combined block in the blank panel without changing its spacing.
+    ax.figure.canvas.draw()
+    renderer = ax.figure.canvas.get_renderer()
+    boxes = [artist.get_window_extent(renderer) for artist in (legend, key)]
+    center_pixels = ((min(b.x0 for b in boxes) + max(b.x1 for b in boxes)) / 2,
+                     (min(b.y0 for b in boxes) + max(b.y1 for b in boxes)) / 2)
+    center_axes = ax.transAxes.inverted().transform(center_pixels)
+    dx, dy = .5 - center_axes[0], .5 - center_axes[1]
+    legend.set_bbox_to_anchor((.02 + dx, 1.02 + dy), transform=ax.transAxes)
+    key.set_position((.02 + dx, .53 + dy))
+
 
 def main():
     data = pd.read_csv(MEANS_FILE, dtype={"analysis_id":str})
@@ -93,13 +120,8 @@ def main():
     fig, axes = plt.subplots(2, 3, figsize=(13.2, 8.6), constrained_layout=False)
     for ax, letter, (metric, (column, unit)) in zip(axes.ravel(), "abcde", SPEECH.items()):
         draw_panel(ax, metric, column, unit, data, contrast, letter, rng)
-    axes.ravel()[-1].axis("off")
-    handles = [patches.Patch(facecolor=COLORS[c], edgecolor="none", alpha=.72, label=c) for c in CONDITIONS]
-    handles.append(plt.Line2D([0], [0], color=INK, marker="o", linewidth=1.4, markersize=4, label="Mean ± 95% CI"))
-    fig.legend(handles=handles, loc="lower center", ncol=4, frameon=False, fontsize=8, bbox_to_anchor=(.5,.018))
-    fig.suptitle("DDK task-condition means: raincloud-style repeated-measures display", fontsize=13, y=.985, color=INK)
-    fig.text(.5, .002, "Analysis sample: n = 155. Panel b displays 154 points because the isolated Single DDK Regularity value for P128 is omitted only from its visual layers for legibility. All means, 95% CIs, and tests use the complete data.", ha="center", va="bottom", fontsize=7.0, color="#4D585D")
     fig.subplots_adjust(left=.055, right=.985, top=.93, bottom=.105, wspace=.30, hspace=.38)
+    draw_legend_panel(axes.ravel()[-1])
     stem = FIGURES / "Figure_02"
     fig.savefig(stem.with_suffix(".png"), dpi=300, bbox_inches="tight", facecolor="white")
     fig.savefig(stem.with_suffix(".pdf"), bbox_inches="tight", facecolor="white")
@@ -108,5 +130,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
