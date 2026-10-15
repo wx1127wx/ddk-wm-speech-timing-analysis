@@ -54,34 +54,71 @@ Table 2 | Pause Duration | high_low_effect,5.30703918080232,5.307,3.918080231990
 Table 2 | Pause Duration | high_low_CI_low,2.607506507064146,2.608,0.0004934929358539897,0.0015,True
 Table 2 | Pause Duration | high_low_CI_high,8.077594695896435,8.078,0.000405304103564319,0.0015,True
 Table 2 | Pause Duration | high_low_q,0.0003156213793198,0.001,0.0006843786206802,0.0015,True
-Table 3 | DDK Rate | trajectory_change,-0.2136543173967806,-0.214,0.0003456826032194049,0.0055,True
-Table 3 | DDK Rate | CI_low,-0.301246056862399,-0.301,0.00024605686239903557,0.0055,True
-Table 3 | DDK Rate | CI_high,-0.1260625779311621,-0.126,6.257793116209998e-05,0.0055,True
-Table 3 | DDK Rate | high_minus_low_trial_1,0.0026978146522706,0.003,0.0003021853477293999,0.0055,True
-Table 3 | DDK Rate | high_minus_low_trial_10,-0.2109565027445099,-0.211,4.349725549010475e-05,0.0055,True
-Table 3 | DDK Rate | q,8.728029209574933e-06,0.001,0.000991271970790425,0.0055,True
-Table 3 | DDK Regularity | trajectory_change,2.9847034552076583,2.985,0.0002965447923415354,0.0055,True
-Table 3 | DDK Regularity | CI_low,-2.6694790079689272,-2.669,0.000479007968927192,0.0055,True
-Table 3 | DDK Regularity | CI_high,8.967352045977572,8.967,0.00035204597757143574,0.0055,True
-Table 3 | DDK Regularity | q,0.3073343351692567,0.307,0.00033433516925668316,0.0055,True
-Table 3 | DDK Duration | trajectory_change,4.467621085189068,4.468,0.00037891481093232926,0.0055,True
-Table 3 | DDK Duration | CI_low,2.360736999744017,2.361,0.0002630002559831368,0.0055,True
-Table 3 | DDK Duration | CI_high,6.617871022420753,6.618,0.0001289775792470138,0.0055,True
-Table 3 | DDK Duration | high_minus_low_trial_1,-1.6853822378932288,-1.69,0.004617762106771117,0.0055,True
-Table 3 | DDK Duration | high_minus_low_trial_10,2.706942355069689,2.71,0.003057644930311021,0.0055,True
-Table 3 | DDK Duration | q,6.536726489364821e-05,0.001,0.0009346327351063518,0.0055,True
-Table 3 | Pause Regularity | trajectory_change,14.816716735097376,14.817,0.00028326490262386983,0.0055,True
-Table 3 | Pause Regularity | CI_low,3.8661994397658974,3.866,0.0001994397658973135,0.0055,True
-Table 3 | Pause Regularity | CI_high,26.921736935918283,26.922,0.0002630640817180563,0.0055,True
-Table 3 | Pause Regularity | high_minus_low_trial_1,9.359378708056544,9.36,0.0006212919434549491,0.0055,True
-Table 3 | Pause Regularity | high_minus_low_trial_10,25.56284807449167,25.56,0.0028480744916699052,0.0055,True
-Table 3 | Pause Regularity | q,0.0137946640745998,0.014,0.0002053359254002001,0.0055,True
-Table 3 | Pause Duration | trajectory_change,5.704748496412458,5.705,0.0002515035875418903,0.0055,True
-Table 3 | Pause Duration | CI_low,1.8021937872779552,1.802,0.0001937872779551597,0.0055,True
-Table 3 | Pause Duration | CI_high,9.756906398672758,9.757,9.360132724189896e-05,0.0055,True
-Table 3 | Pause Duration | high_minus_low_trial_1,2.284432047778556,2.28,0.004432047778556214,0.0055,True
-Table 3 | Pause Duration | high_minus_low_trial_10,8.11950164708822,8.12,0.0004983529117783547,0.0055,True
-Table 3 | Pause Duration | q,0.011534224956054,0.012,0.0004657750439459995,0.0055,True
+Unified Table 3 | DDK Rate | trajectory_change,-0.2136543173967806,-0.2136543173967806,0.0,1e-10,True
+Unified Table 3 | DDK Rate | CI_low,-0.301246056862399,-0.301246056862399,0.0,1e-10,True
+Unified Table 3 | DDK Rate | CI_high,-0.1260625779311621,-0.1260625779311621,0.0,1e-10,True
+Unified Table 3 | DDK Rate | q,8.728029209574933e-06,8.728029209574933e-06,0.0,1e-10,True
+Unified Table 3 | DDK Rate | high_minus_low_trial_1,0.0026978146522706,0.0026978146522706,0.0,1e-10,True
+Unified Table 3 | DDK Rate | high_minus_low_trial_10,-0.2109565027445099,-0.2109565027445099,0.0,1e-10,True
+Unified Table 3 | DDK Regularity | trajectory_change,2.9847034552076583,2.9847034552076583,0.0,1e-10,True
+Unified Table 3 | DDK Regularity | CI_low,-2.6694790079689272,-2.6694790079689272,0.0,1e-10,True
+Unified Table 3 | DDK Regularity | CI_high,8.967352045977572,8.967352045977572,0.0,1e-10,True
+Unified Table 3 | DDK Regularity | q,0.3073343351692567,0.3073343351692567,0.0,1e-10,True
+Unified Table 3 | DDK Regularity | high_minus_low_trial_1,3.0343920065229115,3.0343920065229115,0.0,1e-10,True
+Unified Table 3 | DDK Regularity | high_minus_low_trial_10,6.109663064793804,6.109663064793804,0.0,1e-10,True
+Unified Table 3 | DDK Duration | trajectory_change,4.467621085189068,4.467621085189068,0.0,1e-10,True
+Unified Table 3 | DDK Duration | CI_low,2.360736999744017,2.360736999744017,0.0,1e-10,True
+Unified Table 3 | DDK Duration | CI_high,6.617871022420753,6.617871022420753,0.0,1e-10,True
+Unified Table 3 | DDK Duration | q,6.536726489364821e-05,6.536726489364821e-05,0.0,1e-10,True
+Unified Table 3 | DDK Duration | high_minus_low_trial_1,-1.6853822378932288,-1.6853822378932288,0.0,1e-10,True
+Unified Table 3 | DDK Duration | high_minus_low_trial_10,2.706942355069689,2.706942355069689,0.0,1e-10,True
+Unified Table 3 | Pause Regularity | trajectory_change,14.816716735097524,14.816716735097524,0.0,1e-10,True
+Unified Table 3 | Pause Regularity | CI_low,3.980198057694792,3.980198057694792,0.0,1e-10,True
+Unified Table 3 | Pause Regularity | CI_high,26.782586377772898,26.782586377772898,0.0,1e-10,True
+Unified Table 3 | Pause Regularity | q,0.0078771099289245,0.0078771099289245,0.0,1e-10,True
+Unified Table 3 | Pause Regularity | high_minus_low_trial_1,9.359378708056424,9.359378708056424,0.0,1e-10,True
+Unified Table 3 | Pause Regularity | high_minus_low_trial_10,25.5628480744917,25.5628480744917,0.0,1e-10,True
+Unified Table 3 | Pause Duration | trajectory_change,5.704748496412352,5.704748496412352,0.0,1e-10,True
+Unified Table 3 | Pause Duration | CI_low,1.9207897765331,1.9207897765331,0.0,1e-10,True
+Unified Table 3 | Pause Duration | CI_high,9.629192230439784,9.629192230439784,0.0,1e-10,True
+Unified Table 3 | Pause Duration | q,0.0047580824365304,0.0047580824365304,0.0,1e-10,True
+Unified Table 3 | Pause Duration | high_minus_low_trial_1,2.284432047778828,2.284432047778828,0.0,1e-10,True
+Unified Table 3 | Pause Duration | high_minus_low_trial_10,8.119501647088404,8.119501647088404,0.0,1e-10,True
+Current locked Table 3 | DDK Rate | trajectory_change,-0.2136543173967806,-0.2137,4.56826032194102e-05,5.1e-05,True
+Current locked Table 3 | DDK Rate | CI_low,-0.301246056862399,-0.3012,4.6056862399002085e-05,5.1e-05,True
+Current locked Table 3 | DDK Rate | CI_high,-0.1260625779311621,-0.1261,3.742206883788901e-05,5.1e-05,True
+Current locked Table 3 | DDK Rate | high_minus_low_trial_1,0.0026978146522706,0.0027,2.185347729399996e-06,5.1e-05,True
+Current locked Table 3 | DDK Rate | high_minus_low_trial_10,-0.2109565027445099,-0.211,4.349725549010475e-05,5.1e-05,True
+Current locked Table 3 | DDK Rate | q,8.728029209574933e-06,0.0,8.728029209574933e-06,5.1e-05,True
+Current locked Table 3 | DDK Regularity | trajectory_change,2.9847034552076583,2.9847,3.4552076582095026e-06,5.1e-05,True
+Current locked Table 3 | DDK Regularity | CI_low,-2.6694790079689272,-2.6695,2.099203107297498e-05,5.1e-05,True
+Current locked Table 3 | DDK Regularity | CI_high,8.967352045977572,8.9674,4.7954022427632026e-05,5.1e-05,True
+Current locked Table 3 | DDK Regularity | high_minus_low_trial_1,3.0343920065229115,3.0344,7.993477088685808e-06,5.1e-05,True
+Current locked Table 3 | DDK Regularity | high_minus_low_trial_10,6.109663064793804,6.1097,3.6935206195742865e-05,5.1e-05,True
+Current locked Table 3 | DDK Regularity | q,0.3073343351692567,0.3073,3.433516925666069e-05,5.1e-05,True
+Current locked Table 3 | DDK Duration | trajectory_change,4.467621085189068,4.4676,2.1085189067626686e-05,5.1e-05,True
+Current locked Table 3 | DDK Duration | CI_low,2.360736999744017,2.3607,3.6999744017052194e-05,5.1e-05,True
+Current locked Table 3 | DDK Duration | CI_high,6.617871022420753,6.6179,2.8977579246358687e-05,5.1e-05,True
+Current locked Table 3 | DDK Duration | high_minus_low_trial_1,-1.6853822378932288,-1.6854,1.776210677117973e-05,5.1e-05,True
+Current locked Table 3 | DDK Duration | high_minus_low_trial_10,2.706942355069689,2.7069,4.2355069688859714e-05,5.1e-05,True
+Current locked Table 3 | DDK Duration | q,6.536726489364821e-05,0.0001,3.46327351063518e-05,5.1e-05,True
+Current locked Table 3 | Pause Regularity | trajectory_change,14.816716735097524,14.8167,1.6735097522868614e-05,5.1e-05,True
+Current locked Table 3 | Pause Regularity | CI_low,3.980198057694792,3.9802,1.9423052077804925e-06,5.1e-05,True
+Current locked Table 3 | Pause Regularity | CI_high,26.782586377772898,26.7826,1.3622227100995588e-05,5.1e-05,True
+Current locked Table 3 | Pause Regularity | high_minus_low_trial_1,9.359378708056424,9.3594,2.1291943577139705e-05,5.1e-05,True
+Current locked Table 3 | Pause Regularity | high_minus_low_trial_10,25.5628480744917,25.5628,4.807449170129985e-05,5.1e-05,True
+Current locked Table 3 | Pause Regularity | q,0.0078771099289245,0.0079,2.2890071075500756e-05,5.1e-05,True
+Current locked Table 3 | Pause Duration | trajectory_change,5.704748496412352,5.7047,4.849641235171731e-05,5.1e-05,True
+Current locked Table 3 | Pause Duration | CI_low,1.9207897765331,1.9208,1.0223466900161071e-05,5.1e-05,True
+Current locked Table 3 | Pause Duration | CI_high,9.629192230439784,9.6292,7.769560216530635e-06,5.1e-05,True
+Current locked Table 3 | Pause Duration | high_minus_low_trial_1,2.284432047778828,2.2844,3.204777882759302e-05,5.1e-05,True
+Current locked Table 3 | Pause Duration | high_minus_low_trial_10,8.119501647088404,8.1195,1.6470884034447408e-06,5.1e-05,True
+Current locked Table 3 | Pause Duration | q,0.0047580824365304,0.0048,4.1917563469599795e-05,5.1e-05,True
+Unified Table 3 | BH family of five,8.728029209574933e-06,8.728029209574933e-06,0.0,1e-10,True
+Unified Table 3 | BH family of five,0.3073343351692567,0.3073343351692567,0.0,1e-10,True
+Unified Table 3 | BH family of five,6.536726489364821e-05,6.536726489364821e-05,0.0,1e-10,True
+Unified Table 3 | BH family of five,0.0078771099289245,0.0078771099289245,0.0,1e-10,True
+Unified Table 3 | BH family of five,0.0047580824365304,0.004758082436530333,6.678685382510707e-17,1e-10,True
 Table 4 | DDK Rate | single_to_dual_x_age,-0.3450234918031134,-0.345,2.3491803113451226e-05,0.0055,True
 Table 4 | DDK Rate | CI_low,-0.4804448007976015,-0.48,0.0004448007976015078,0.0055,True
 Table 4 | DDK Rate | CI_high,-0.2096021828086253,-0.21,0.00039781719137468863,0.0055,True

@@ -9,5 +9,9 @@
     22.0,
     86.0
   ],
-  "input_table": "data_raw/ddkwm_trials.csv"
+  "input_table": "data_raw/ddkwm_trials.csv",
+  "high_low_only": true,
+  "single_trials": 0,
+  "fixed_formula": "g(Y) ~ Condition * Progress",
+  "random_formula": "diagonal participant intercept + Condition + Progress"
 }

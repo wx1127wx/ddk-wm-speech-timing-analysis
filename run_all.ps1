@@ -29,7 +29,6 @@ Invoke-Analysis @(".\01_sample_and_condition_means\run_condition_means_and_age.p
 Invoke-Analysis @(".\01_sample_and_condition_means\build_figure_02.py")
 Invoke-Analysis @(".\01_sample_and_condition_means\build_figure_04.py")
 Invoke-Analysis @(".\02_working_memory_accuracy\run_working_memory_accuracy.py")
-Invoke-Analysis @(".\03_trial_trajectories\fit_low_high_trajectory_models.py")
 Invoke-Analysis @(".\03_trial_trajectories\fit_reported_pause_trajectory_rows.py")
 Invoke-Analysis @(".\03_trial_trajectories\build_figure_03.py")
 Invoke-Analysis @(".\04_reported_sensitivity\run_reported_sensitivity.py")

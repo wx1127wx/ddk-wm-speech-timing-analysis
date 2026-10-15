@@ -1,6 +1,14 @@
 __pycache__/
 *.py[cod]
-data_raw/*.csv
-data_raw/*.tsv
-data_raw/*.xlsx
+data_raw/**/*.csv
+data_raw/**/*.tsv
+data_raw/**/*.xlsx
+**/data_processed/
+07_fig3_age_moderation/
+08_fig3_paired_difference_age/
+09_condition_age_progress_correctness/
+10_age_group_progress_correctness/
+11_ordered_age_trajectory_amplification/
+12_unified_low_high_and_figure_labels_20261015/
+13_manual_fig3_replication_20261015/
 .DS_Store

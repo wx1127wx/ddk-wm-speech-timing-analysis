@@ -1,53 +1,63 @@
-# Analysis code for the JSLHR submission
+# Analysis code for the JSLHR manuscript
 
 [中文说明](README_zh-CN.md)
 
-**Manuscript title:** *Sequential Diadochokinesis Performance During Visual-Memory Dual Tasking: Repeated-Trial Dynamics Across Adulthood*
+**Manuscript title:** *Speech Timing During Sequential Diadochokinesis Under Dual-Task Conditions: Age-Related Differences and Trial-Level Changes*
 
-This is the minimal manuscript-specific release. It contains only analyses reported in the current submission: sample/condition means and age moderation, working-memory accuracy, Low/High trial trajectories, the two reported trajectory sensitivity analyses, CMMS moderation (including rank-score sensitivity), and manual–automatic agreement. Earlier exploratory analyses, unused figures, and superseded workflows are intentionally excluded.
+This release contains the analyses reported in the manuscript: condition means and age associations, working-memory accuracy, Low/High trial trajectories, two trial-selection sensitivity analyses, CMMS moderation and rank-score sensitivity, and manual–automatic measurement agreement. Local supplementary experiments and participant-level inputs are excluded.
 
 ## Data availability and privacy
 
-Analysis code, aggregate results, and figures are public. Participant-level inputs are **not included**; the source-data files and access arrangements are described in `data_raw/README.md`. Deidentified feature tables are available from the corresponding authors on reasonable request, subject to ethics and data-protection requirements. Place the four controlled-access files into `data_raw/` before running the pipeline. Raw audio, direct identifiers, dates embedded in recording names, and administrative recording columns must not be added to a public repository.
+Code, aggregate tables and figures are public. Participant-level feature tables remain controlled access; see `data_raw/README.md` for required columns. Obtain deidentified inputs from the corresponding authors on reasonable request, subject to ethics and data-protection requirements. Place the four input CSV files directly in `data_raw/`. Do not publish raw audio, participant-level records, identifiable filenames or audio paths. Generated `data_processed` directories are also excluded from version control.
 
-## Environment
+## Environment and execution
 
-The release was verified on Windows with Python 3.11.15 in the `env_codex` Conda environment. Exact tested package versions are in `requirements.txt` and `environment.yml`.
+The tested environment is Windows, Python 3.11.15, Conda `env_codex`. Package versions are recorded in `requirements.txt` and `environment.yml`.
 
 ```powershell
 conda activate env_codex
-python -m pip install -r requirements.txt
 powershell -ExecutionPolicy Bypass -File .\run_all.ps1 -Python python
 ```
 
-The final command runs all manuscript analyses and then executes 207 numerical checks against the locked submission values. Aggregate results are written inside each numbered analysis directory; `verification_summary.json` must report `"all_passed": true`.
+With all four controlled inputs available, this runs the complete pipeline. To check the released aggregate tables without participant data:
+
+```powershell
+conda activate env_codex
+python -B verify_manuscript_results.py
+```
+
+The verifier performs **244 checks**; `verification_summary.json` must report `all_passed: true`. This includes current Table 3 source/endpoint/FDR consistency and a separate locked current Table 3 target. Matching saved outputs is a numerical consistency check, not proof that all model assumptions are satisfied. The October 15 publication update rebuilt Figures 2–4 and Table 3 and checked the aggregate outputs; it did not rerun the entire research pipeline.
 
 ## Directory map
 
-- `01_sample_and_condition_means`: Tables 1, 2, and 4; Figures 2 and 4.
-- `02_working_memory_accuracy`: Low/High accuracy counts and the reported binomial mixed model.
-- `03_trial_trajectories`: Table 3 and Figure 3.
-- `04_reported_sensitivity`: correct-response-only and Trials 2–9 analyses reported in Results.
-- `05_cmms_moderation`: Table 5, CMMS descriptives/associations, trial-level moderation, and rank-score sensitivity.
-- `06_manual_validation`: Table 6 statistics and condition-change agreement.
-- `expected_results`: locked numerical comparison targets and current manuscript reference figures.
+| Directory | Manuscript output |
+|---|---|
+| `01_sample_and_condition_means` | Tables 1, 2, 4; Figures 2, 4 |
+| `02_working_memory_accuracy` | Low/High accuracy and binomial mixed model |
+| `03_trial_trajectories` | Five-outcome Table 3; four-panel Figure 3 |
+| `04_reported_sensitivity` | Correct-response-only and Trials 2–9 sensitivity analyses |
+| `05_cmms_moderation` | Table 5, scale associations, trial moderation, rank sensitivity |
+| `06_manual_validation` | Table 6 measurement agreement and condition-contrast agreement |
+| `expected_results/current` | Locked current Table 3 numerical target |
+| `expected_results/tables` | Historical submission targets, retained unchanged |
+| `expected_results/figures` | Historical reference figures, retained unchanged |
 
-`MANUSCRIPT_OUTPUT_MAP.csv` gives the exact script-to-claim mapping. Figure 1 is a task-procedure schematic and therefore is not generated by the statistical pipeline.
+`MANUSCRIPT_OUTPUT_MAP.csv` maps scripts to outputs. Figure 1 is a procedure schematic and is not generated by the statistical pipeline. The numbered analysis directories contain the current generated figures.
 
-## Important traceability notes
+## Current model and reporting conventions
 
-1. The DDK Rate, DDK Regularity, and DDK Duration rows of Table 3 are generated by the Low/High-only trial-level model. The two Pause rows come from an age-adjusted Single/Low/High model. The revised manuscript Methods explicitly describes both specifications and their different FDR families. `fit_reported_pause_trajectory_rows.py` retains the actual source of the reported Pause results; the statistical specifications and numeric table values are unchanged.
-2. The release implements the manuscript-stated 2,000 participant-cluster bootstrap resamples for Table 6. The submission table preserves limits from the earlier fixed-seed realization; point estimates are identical, while some bootstrap limits vary slightly. The verifier uses explicit Monte-Carlo tolerances for these limits and strict rounding tolerances elsewhere.
-3. Figure 2's display layout was updated on October 13, 2026: the overall title, panel descriptions, and bottom note have been removed; the enlarged group legend and FDR-adjusted q significance key are centered together in the unused lower-right panel. Plot-layer definitions belong in the manuscript caption. Plot data, estimates, confidence intervals, and tests are unchanged. The original reference PNG remains under `expected_results/figures`. Figure 3 is regenerated from the final model outputs; its reference PNG is retained under `expected_results/figures` for visual comparison. Figure 4 and its reference PNG were updated on October 8, 2026, to match manuscript version 16: model fitting and the prediction grid now use the same age scaling, and the annotation states the age unit and contrast direction. The updated script-generated PNG matches the version 16 embedded figure byte for byte in the tested environment.
+All five Table 3 outcomes use the same **Low/High-only** model, `g(Y) ~ Condition * Progress`, with independent participant random intercept, condition slope and progress slope. Low = −0.5, High = +0.5; progress = (trial − 1)/9. Rate uses the original scale; the other four outcomes use natural logs. The five condition-by-progress tests form one BH-FDR family. No Single observations or age covariate enter this primary dynamic model.
 
-## Age standardization and Figure 4 update
+Figure 3 retains the manuscript's four panels; Table 3 reports all five outcomes, including DDK Regularity and both of its endpoint contrasts. The compatibility entry point `fit_reported_pause_trajectory_rows.py` fits the unified model once and exports legacy gap filenames; it no longer fits a separate three-condition model.
 
-The two existing age-standardization conventions are retained. Condition-mean age-moderation models calculate the sample SD (`ddof=1`) over 465 participant-condition records: mean age 39.5419 years, SD 18.9870 years (approximately 18.99 years per model age unit). The age-adjusted pause-trajectory and CMMS models standardize age at the participant level before merging with repeated records: the same mean and SD 19.0281 years (approximately 19.03 years per age unit). There are 155 independent participants in both cases.
+Figures 2–4 use **Intersyllabic-gap** as the display name. Legacy `Pause`/`pause` column names remain unchanged for data compatibility. Figure 4 uses **Dual–Single** (the average of Low and High minus Single), with unchanged coefficient signs. Its fitting and prediction age SD is approximately 18.99 years, while participant-standardized CMMS age covariates use approximately 19.03 years. See `AGE_STANDARDIZATION.md`.
 
-Figure 4 previously used the participant-level SD to build its prediction grid while fitting with the condition-record `age_z`. The grid now uses the fitting scale, including both prediction lines and confidence bands. Table 4 and the revised manuscript's condition-mean age-effect labels use approximately 18.99 years. Model coefficients, confidence intervals, p values, and FDR-adjusted q values are unchanged. See [AGE_STANDARDIZATION.md](AGE_STANDARDIZATION.md) for the derivation and validation scope.
+The correct-response and Trials 2–9 analyses are two **independent subsets of the full Low/High data**, not sequential filters. Manual annotations provide supplementary measurement-agreement evidence; they do not establish replication of the full-sample trial trajectories. Table 6 retains 2,000 participant-cluster bootstrap resamples; the verifier documents Monte Carlo tolerances for historical bootstrap limits.
 
-The version 16 checks reproduced the five existing condition-mean age models using local inputs and matched the released coefficients, standard errors, p values, intervals, and FDR results. This is a targeted validation, not a new complete rerun of all research analyses. Four log-outcome models emitted a possible random-effect boundary warning despite optimizer convergence; this warning remains documented for author review.
+Audio recording lasted **5 s** in Single, Low and High. The **3.8 s** visual-memory sequence and intervals, plus 600 ms preparation and 600 ms fixation, make up the 5 s pre-probe period. These are protocol durations, not a verified rate denominator; the original automatic extraction implementation and exact measurement span still require clarification.
 
-## Reproducibility rule
+## Remaining statistical review
 
-Do not add analyses merely because they existed in earlier project folders. A new script or output belongs here only if the current manuscript reports it or it is necessary to generate a reported table/figure.
+The current Table 4/5 models and results are preserved pending focused review. With three condition means per person, the current intercept plus two random-condition slopes and residual variance have a redundant covariance decomposition. Optimizer convergence alone does not resolve this identifiability issue. The CMMS condition-mean model adjusts for age and education main effects but not their condition interactions; those main effects do not by themselves adjust the CMMS association with within-person condition contrasts for age/education moderation. The stronger independence claim therefore needs a joint-moderation or participant-contrast reanalysis. No new results from such reanalyses are asserted here.
+
+Fixed Single→Low→High order confounds condition with order, practice and fatigue. The primary condition-by-progress result does not demonstrate age-related trajectory amplification. See `CHANGELOG_20261015.md` for update scope and validation.

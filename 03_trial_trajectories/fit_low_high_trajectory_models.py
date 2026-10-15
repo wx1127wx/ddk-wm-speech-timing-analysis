@@ -13,7 +13,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
-from analysis_helpers import METRICS, DiagonalLMM, bh_adjust, dynamic_design, load_dual_trials, reported_effect, response, save_json_qc  # noqa: E402
+from analysis_helpers import display_metric, METRICS, DiagonalLMM, bh_adjust, dynamic_design, load_dual_trials, reported_effect, response, save_json_qc  # noqa: E402
 
 
 OUT = Path(__file__).resolve().parent
@@ -100,7 +100,7 @@ def figure(data: pd.DataFrame, prediction: pd.DataFrame, table: pd.DataFrame) ->
         q = row.q_BH_5_outcomes
         q_label = "<.001" if q < .001 else f"={q:.3f}"
         axis.text(.03, .96, f"Block x progress: q {q_label}", transform=axis.transAxes, va="top", fontsize=8)
-        axis.set(title=metric, xlim=(1, 10), xlabel="Within-block trial", ylabel=raw_unit)
+        axis.set(title=display_metric(metric), xlim=(1, 10), xlabel="Within-block trial", ylabel=raw_unit)
         axis.spines[["top", "right"]].set_visible(False)
     axes.flat[-1].axis("off")
     axes.flat[0].legend(frameon=False, loc="lower left")

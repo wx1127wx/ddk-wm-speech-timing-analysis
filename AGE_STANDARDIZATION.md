@@ -1,6 +1,8 @@
 # Age standardization and Figure 4
 
-Updated October 8, 2026, for manuscript version 16.
+Originally documented October 8, 2026, for manuscript version 16; current-model note added October 15, 2026.
+
+**Current release:** all five primary trajectory outcomes now use the same Low/High-only model without age. The former age-adjusted three-condition gap model described below is historical and has been retired. Figure 4 now uses the current manuscript layout and Intersyllabic-gap labels; its age scaling and Dual–Single direction remain unchanged. Historical byte-identity and 207-check statements below describe the version 16 validation, not the current figure or verifier. The current verifier has 244 checks. See `CHANGELOG_20261015.md`.
 
 ## Retained conventions
 
@@ -9,7 +11,7 @@ Age is continuous and standardized as `(age - mean_age) / age_SD`, with the samp
 | Model family | Records used to compute the SD | Mean age (years) | SD (years) |
 |---|---|---:|---:|
 | Condition-mean age moderation and Figure 4 | 465 condition records, 155 participants represented three times each | 39.5419354839 | 18.9870323407 |
-| Age-adjusted three-condition pause trajectories | 155 participant records, before trial merging | 39.5419354839 | 19.0280854316 |
+| Retired age-adjusted three-condition pause trajectories (historical) | 155 participant records, before trial merging | 39.5419354839 | 19.0280854316 |
 | CMMS condition-mean and trial-level moderation | Participants with available CMMS scores, before repeated-record merging; all 155 had scores | 39.5419354839 | 19.0280854316 |
 
 The primary Low/High trajectory and trial-selection sensitivity models do not include age. A loader creating an `age_z` column does not imply that every downstream model adjusts for age.

@@ -79,7 +79,7 @@ def draw_panel(ax, metric, column, unit, data, contrast, letter, rng):
     ax.set_xticks(np.arange(3), CONDITIONS)
     ax.tick_params(axis="x", labelsize=8)
     ax.tick_params(axis="y", labelsize=7.5)
-    ax.set_ylabel(f"{metric} ({unit})", fontsize=8.5)
+    ax.set_ylabel(f"{metric.replace('Pause', 'Intersyllabic-gap')} ({unit})", fontsize=8.5)
     ax.grid(axis="y", color="#D9DEE2", linewidth=.55)
     ax.set_axisbelow(True)
     ax.spines[["top", "right"]].set_visible(False)
@@ -123,7 +123,7 @@ def main():
     fig.subplots_adjust(left=.055, right=.985, top=.93, bottom=.105, wspace=.30, hspace=.38)
     draw_legend_panel(axes.ravel()[-1])
     stem = FIGURES / "Figure_02"
-    fig.savefig(stem.with_suffix(".png"), dpi=300, bbox_inches="tight", facecolor="white")
+    fig.savefig(stem.with_suffix(".png"), dpi=600, bbox_inches="tight", facecolor="white")
     fig.savefig(stem.with_suffix(".pdf"), bbox_inches="tight", facecolor="white")
     print(stem.with_suffix(".png"))
     print(stem.with_suffix(".pdf"))

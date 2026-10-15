@@ -28,9 +28,20 @@ METRICS = {
 }
 
 
+def display_metric(metric: str) -> str:
+    """Display alias only; retain source feature keys for traceability."""
+    return metric.replace("Pause", "Intersyllabic-gap")
+
+
+def trial_input_path(name: str) -> Path:
+    direct = ROOT / "data_raw" / name
+    nested = ROOT / "data_raw" / "02_trial_level_analysis" / ("demographics.csv" if name == "participants.csv" else name)
+    return direct if direct.exists() else nested
+
+
 def load_dual_trials() -> pd.DataFrame:
     """Load current 3,100-row Low/High table without altering observations."""
-    path = ROOT / "data_raw" / "ddkwm_trials.csv"
+    path = trial_input_path("ddkwm_trials.csv")
     data = pd.read_csv(path, dtype={"subject_id": str})
     required = {"subject_id", "ddkwm_condition", "trial_index", "wm_correct", *[x[0] for x in METRICS.values()]}
     missing = required.difference(data.columns)
@@ -45,7 +56,7 @@ def load_dual_trials() -> pd.DataFrame:
     data["wm_correct"] = pd.to_numeric(data["wm_correct"], errors="raise").astype(float)
     if not set(data["wm_correct"].unique()).issubset({0.0, 1.0}):
         raise ValueError("wm_correct must be binary.")
-    demo = pd.read_csv(ROOT / "data_raw" / "participants.csv", dtype={"subject_id": str})
+    demo = pd.read_csv(trial_input_path("participants.csv"), dtype={"subject_id": str})
     data = data.merge(demo[["subject_id", "age"]], on="subject_id", how="left", validate="many_to_one")
     if data["age"].isna().any():
         raise ValueError("Age is missing after merge.")
@@ -53,6 +64,10 @@ def load_dual_trials() -> pd.DataFrame:
     data["age_z"] = (data["age"].astype(float) - age.mean()) / age.std(ddof=1)
     data = data.sort_values(["subject_id", "condition", "trial_index"]).reset_index(drop=True)
     counts = data.groupby(["subject_id", "condition"], observed=True).size().unstack(fill_value=0)
+    if data.duplicated(["subject_id", "condition", "trial_index"]).any():
+        raise ValueError("Duplicate participant-condition-trial rows")
+    if set(data.trial_index) != set(range(1, 11)):
+        raise ValueError("Expected trial indices 1 through 10")
     if len(data) != 3100 or data["subject_id"].nunique() != 155 or not (counts == 10).all().all():
         raise ValueError("Expected 155 participants with 10 Low and 10 High trials each.")
     return data
@@ -103,7 +118,10 @@ def save_json_qc(data: pd.DataFrame, destination: Path) -> None:
         "age_mean": float(data.drop_duplicates("subject_id")["age"].mean()),
         "age_sd": float(data.drop_duplicates("subject_id")["age"].std(ddof=1)),
         "age_range": [float(data["age"].min()), float(data["age"].max())],
-        "input_table": "data_raw/ddkwm_trials.csv",
+        "input_table": str(trial_input_path("ddkwm_trials.csv").relative_to(ROOT)),
+        "high_low_only": True, "single_trials": 0,
+        "fixed_formula": "g(Y) ~ Condition * Progress",
+        "random_formula": "diagonal participant intercept + Condition + Progress",
     }
     import json
     destination.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")

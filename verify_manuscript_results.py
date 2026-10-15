@@ -31,12 +31,29 @@ def main() -> None:
         for expected_col, actual_col in mapping2.items():
             check(f"Table 2 | {outcome} | {expected_col}", t2a.loc[outcome, actual_col], t2e.loc[outcome, expected_col])
 
-    t3e = pd.read_csv(EXPECTED / "Table_03.csv").set_index("outcome")
-    t3a = pd.read_csv(ROOT / "03_trial_trajectories" / "tables" / "Table_03_trajectory_change.csv").set_index("outcome")
-    for outcome in t3e.index:
+    # The immutable submission targets retain the superseded Pause model.
+    # Validate current Table 3 against its common five-outcome source instead.
+    t3a = pd.read_csv(ROOT / "03_trial_trajectories/tables/Table_03_trajectory_change.csv").set_index("outcome")
+    models = pd.read_csv(ROOT / "03_trial_trajectories/tables/low_high_trajectory_models.csv")
+    endpoints = pd.read_csv(ROOT / "03_trial_trajectories/tables/low_high_trial_contrasts.csv")
+    from dynamic_model_utils import bh_adjust
+    interactions = models[models.term.eq("Block x progress")]
+    for outcome in t3a.index:
+        m = interactions[interactions.metric.eq(outcome)].iloc[0]
+        for col, source in [("trajectory_change","reported_effect"),("CI_low","CI_low"),("CI_high","CI_high"),("q","q_BH_5_outcomes")]:
+            check(f"Unified Table 3 | {outcome} | {col}",t3a.loc[outcome,col],m[source],1e-10)
+        for trial in [1,10]:
+            col = f"high_minus_low_trial_{trial}"
+            target = endpoints[(endpoints.metric==outcome)&(endpoints.trial_index==trial)].reported_effect.iloc[0]
+            check(f"Unified Table 3 | {outcome} | {col}",t3a.loc[outcome,col],target,1e-10)
+    if set(t3a.index) != set(models.metric) or len(interactions) != 5:
+        raise ValueError("Table 3 must include all five unified outcomes.")
+    locked3 = pd.read_csv(ROOT / "expected_results/current/Table_03.csv").set_index("outcome")
+    for outcome in locked3.index:
         for col in ["trajectory_change", "CI_low", "CI_high", "high_minus_low_trial_1", "high_minus_low_trial_10", "q"]:
-            if pd.notna(t3e.loc[outcome, col]):
-                check(f"Table 3 | {outcome} | {col}", t3a.loc[outcome, col], t3e.loc[outcome, col], 0.0055)
+            check(f"Current locked Table 3 | {outcome} | {col}", t3a.loc[outcome, col], locked3.loc[outcome, col], 0.000051)
+    for actual,target in zip(interactions.q_BH_5_outcomes,bh_adjust(interactions.p.to_numpy())):
+        check("Unified Table 3 | BH family of five",actual,target,1e-10)
 
     t4e = pd.read_csv(EXPECTED / "Table_04.csv").set_index("outcome")
     t4a = pd.read_csv(ROOT / "01_sample_and_condition_means" / "tables" / "Table_04_age_moderation.csv").set_index("outcome")
